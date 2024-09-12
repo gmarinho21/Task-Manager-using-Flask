@@ -54,6 +54,7 @@ jobs:
             VERSION=$(curl -s https://jeremylong.github.io/DependencyCheck/current.txt)
             curl -sL "https://github.com/jeremylong/DependencyCheck/releases/download/v$VERSION/dependency-check-$VERSION-release.zip" --output dependency-check.zip
             unzip dependency-check.zip
+            
         - name: Run Dependency Check
           run: |
             ./dependency-check/bin/dependency-check.sh --nvdApiKey ${{ secrets.NVD_KEY }} --out report.html --scan ./requirements.txt
