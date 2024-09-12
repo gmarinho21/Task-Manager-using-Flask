@@ -46,6 +46,9 @@ jobs:
     runs-on: ubuntu-latest
     needs: test
     steps: 
+        - name: Checkout
+          uses: actions/checkout@v4
+          
         - name: Download OWASP Dependency Check
           run: |
             VERSION=$(curl -s https://jeremylong.github.io/DependencyCheck/current.txt)
