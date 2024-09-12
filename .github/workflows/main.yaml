@@ -43,17 +43,10 @@ jobs:
       - name: Perform Bandit Analysis
         uses: PyCQA/bandit-action@v1
 
-      - name: Upload Bandit Report
-        uses: actions/upload-artifact@v4
-        with:
-          name: bandit-report
-          path: bandit-report.html  # Path to the Bandit report file
-
-
   build-and-push:
     name: "Build and Push"
     runs-on: ubuntu-latest
-    needs: test 
+    needs: bandit 
 
     steps:
       - name: Checkout
