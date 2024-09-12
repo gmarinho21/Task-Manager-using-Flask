@@ -6,5 +6,4 @@ COPY ./requirements.txt /app/requirements.txt
 RUN pip install -r requirements.txt
 COPY . .
 EXPOSE 5000
-CMD ["cd", "todo_project"]
 CMD ["python", "./todo_project/run.py"]
