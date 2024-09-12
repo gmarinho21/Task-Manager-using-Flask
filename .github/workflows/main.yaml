@@ -56,7 +56,7 @@ jobs:
             unzip dependency-check.zip
         - name: Run Dependency Check
           run: |
-            ./dependency-check/bin/dependency-check.sh -s ./requirements.txt --nvdApiKey ${{ secrets.NVD_KEY }} --out report.html --scan  .
+            ./dependency-check/bin/dependency-check.sh -s ./requirements.txt --exclude ./dependency-check --nvdApiKey ${{ secrets.NVD_KEY }} --out report.html --scan  .
             rm -rf dependency-check*
   
         - name: Upload Artifacts
