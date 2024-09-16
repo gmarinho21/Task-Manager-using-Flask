@@ -2,7 +2,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: task-with-flask-service
-  namespace: task-with-flask
+  namespace: hackersdobem
 spec:
   type: ClusterIP
   ports:

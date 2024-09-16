@@ -2,6 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: task-with-flask-deployment
+  namespace: hackersdobem
   labels:
     app: task-with-flask
 spec:
