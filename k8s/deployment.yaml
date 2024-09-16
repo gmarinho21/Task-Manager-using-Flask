@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
         - name: task-with-flask
-          image: gmarinho21/gabriel-hdb:2e2fe4c
+          image: gmarinho21/gabriel-hdb:342bf8d
           imagePullPolicy: Always
           ports:
             - containerPort: 5000
@@ -28,3 +28,9 @@ spec:
             limits:
               cpu: 300m
               memory: 500Mi
+          env:
+            - name: SENTRY_SDK
+              valueFrom:
+                secretKeyRef:
+                  name: hdb-secret
+                  key: SENTRY_SDK
