@@ -7,3 +7,5 @@ WTForms==3.1.1
 Jinja2==3.1.2
 werkzeug==2.3.3
 pytest==8.3.3
+sentry_sdk==2.14.0
+python-dotenv==1.0.1
