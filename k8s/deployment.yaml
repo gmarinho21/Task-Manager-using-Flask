@@ -2,6 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: task-with-flask-deployment
+  namespace: hackersdobem
   labels:
     app: task-with-flask
 spec:
@@ -16,7 +17,7 @@ spec:
     spec:
       containers:
         - name: task-with-flask
-          image: gmarinho21/gabriel-hdb:de2c9ca
+          image: gmarinho21/gabriel-hdb:5bc7648
           imagePullPolicy: Always
           ports:
             - containerPort: 5000
