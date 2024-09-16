@@ -69,6 +69,7 @@ jobs:
   owasp-zap:
       name: "Build, Test, and Run OWASP ZAP Scan"
       runs-on: ubuntu-latest
+      needs: test
 
       steps:
         - name: Checkout code
@@ -103,13 +104,14 @@ jobs:
             path: report_html.html
 
   build-and-push:
+    if: ${{ !contains(github.event.head_commit.message, 'Update tag in values helm') }}
     name: "Build and Push"
     runs-on: ubuntu-latest
     needs: [bandit, dependency-check, owasp-zap]
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-        
+
       - name: Generate Sha
         id: generate_sha
         run: |
@@ -118,7 +120,6 @@ jobs:
 
       - name: Login into the container registry
         uses: docker/login-action@v3
-
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
@@ -129,4 +130,31 @@ jobs:
           context: .
           push: true
           tags: |
+            gmarinho21/gabriel-hdb:${{ steps.generate_sha.outputs.sha}}
             gmarinho21/gabriel-hdb:latest
+
+      - name: Ensure Branch Exists
+        run: |
+          echo "Checking if branch exists..."
+          BRANCH=staging  # Define your branch here
+          git fetch origin
+          if git branch -r | grep -w "origin/$BRANCH"; then
+            echo "Branch '$BRANCH' already exists."
+          else
+            echo "Branch '$BRANCH' does not exist. Creating it..."
+            git checkout -b $BRANCH
+            git push origin $BRANCH
+          fi
+
+      - name: Update image deployment
+        uses: fjogeleit/yaml-update-action@main
+        with:
+          branch: release
+          targetBranch: main
+          createPR: true
+          valueFile: "k8s/deployment.yaml"
+          propertyPath: "spec.template.spec.containers[0].image"
+          value: gmarinho21/tasg-backend:${{ steps.generate_sha.outputs.sha }}
+          commitChange: true
+          message: "[skip ci] Update tag in values helm"
+          token: ${{ secrets.GITHUB_TOKEN }}
