@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   name: task-with-flask-deployment
   labels:
-    app: tasg
+    app: task-with-flask
 spec:
   replicas: 1
   selector:
