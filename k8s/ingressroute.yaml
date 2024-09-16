@@ -10,7 +10,7 @@ spec:
   routes:
     - match: HostSNI(`*`)
       services:
-        - name: ntfy
+        - name: task-with-flask-service
           port: 5000
           terminationDelay: -1
 
@@ -28,5 +28,5 @@ spec:
       match: Host(`hdb.gabrielm.com.br`)
       services:
         - kind: Service
-          name: ntfy
+          name: task-with-flask-service
           port: 5000

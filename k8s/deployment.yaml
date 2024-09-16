@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
         - name: task-with-flask
-          image: gmarinho21/gabriel-hdb:7aabdc9
+          image: gmarinho21/gabriel-hdb:2e2fe4c
           imagePullPolicy: Always
           ports:
             - containerPort: 5000
