@@ -1,0 +1,32 @@
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRouteTCP
+metadata:
+  name: hdb-ingress
+  namespace: hackersdobem
+spec:
+  entryPoints:
+    - hdb
+  routes:
+    - match: HostSNI(`*`)
+      services:
+        - name: ntfy
+          port: 5000
+          terminationDelay: -1
+
+---
+apiVersion: traefik.containo.us/v1alpha1 
+kind: IngressRoute
+metadata:
+  name: ingressroute-web-hdb
+  namespace: hackersdobem
+spec:
+  entryPoints:
+    - web
+  routes:
+    - kind: Rule
+      match: Host(`hdb.gabrielm.com.br`)
+      services:
+        - kind: Service
+          name: ntfy
+          port: 5000
